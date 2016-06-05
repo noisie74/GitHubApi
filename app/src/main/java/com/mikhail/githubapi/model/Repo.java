@@ -6,10 +6,15 @@ package com.mikhail.githubapi.model;
 public class Repo {
 
     public final String name;
+    private Items[] items;
 
     public Repo(String name, String url) {
         this.name = name;
     }
+
+   public Items[] getItems(){
+       return items;
+   }
 
     @Override
     public String toString() {

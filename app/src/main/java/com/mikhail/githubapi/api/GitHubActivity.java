@@ -34,11 +34,11 @@ public class GitHubActivity extends MainActivity {
     private void reposApiCall() {
         GitHubAPIService.GitHubRx gitHub = GitHubAPIService.createRx();
 
-        Observable<List<Repo>> observable = gitHub.repositories(REPO_DATES, REPO_RATING);
+        Observable<Repo> observable = gitHub.repositories(REPO_DATES, REPO_RATING);
 
         observable.subscribeOn(Schedulers.newThread()).
                 observeOn(AndroidSchedulers.mainThread()).
-                subscribe(new Subscriber<List<Repo>>() {
+                subscribe(new Subscriber<Repo>() {
                     @Override
                     public void onCompleted() {
 
@@ -51,7 +51,7 @@ public class GitHubActivity extends MainActivity {
                     }
 
                     @Override
-                    public void onNext(List<Repo> repos) {
+                    public void onNext(Repo repos) {
                         ModelObjectAdapter modelObjectAdapter = new ModelObjectAdapter(repos);
                         recyclerView.setAdapter(modelObjectAdapter);
                     }

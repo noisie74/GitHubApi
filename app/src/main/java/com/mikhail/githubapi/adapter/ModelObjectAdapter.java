@@ -7,15 +7,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mikhail.githubapi.R;
+import com.mikhail.githubapi.model.Items;
+import com.mikhail.githubapi.model.Repo;
 
 import java.util.List;
 
 /**
  * Created by Mikhail on 6/4/16.
  */
-public class ModelObjectAdapter<T> extends RecyclerView.Adapter<ModelObjectAdapter.ViewHolder>  {
+public class ModelObjectAdapter extends RecyclerView.Adapter<ModelObjectAdapter.ViewHolder>  {
 
-    private List<T> modelObject;
+//    private List<T> modelObject;
+    public Repo repositories;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView contributorTextView;
@@ -25,8 +28,8 @@ public class ModelObjectAdapter<T> extends RecyclerView.Adapter<ModelObjectAdapt
         }
     }
 
-    public ModelObjectAdapter(List<T> modelObject) {
-        this.modelObject = modelObject;
+    public ModelObjectAdapter(Repo repositories) {
+        this.repositories = repositories;
     }
 
     @Override
@@ -40,12 +43,12 @@ public class ModelObjectAdapter<T> extends RecyclerView.Adapter<ModelObjectAdapt
 
     @Override
     public void onBindViewHolder(ModelObjectAdapter.ViewHolder holder, int position) {
-        T modelObject = this.modelObject.get(position);
-        holder.contributorTextView.setText(modelObject.toString());
+
+        holder.contributorTextView.setText(repositories.getItems()[position].getName());
     }
 
     @Override
     public int getItemCount() {
-        return modelObject.size();
+        return repositories.getItems().length;
     }
 }

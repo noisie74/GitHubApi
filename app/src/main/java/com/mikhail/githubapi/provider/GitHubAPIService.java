@@ -31,7 +31,7 @@ public class GitHubAPIService {
 
     public interface GitHubRx {
         @GET("/search/repositories")
-        Observable<List<Repo>> repositories(
+        Observable<Repo> repositories(
                 @Query("q") String date,
                 @Query("sort") String rating);
     }
