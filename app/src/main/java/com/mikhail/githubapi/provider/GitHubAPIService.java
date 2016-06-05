@@ -18,7 +18,7 @@ import rx.Observable;
  */
 public class GitHubAPIService {
 
-    public static final String API_URL = "https://api.github.com";
+    public static final String API_URL = "https://api.github.com/search/";
 
     public static GitHubRx createRx() {
         return new Retrofit.Builder()
@@ -30,11 +30,12 @@ public class GitHubAPIService {
     }
 
     public interface GitHubRx {
-        @GET("/search/repositories")
+        @GET("repositories")
         Observable<List<Repo>> repositories(
-                @Query("q") String date,
-                @Query("sort") String rating);
+                @Query("q") String query);
+//                @Query("sort") String rating);
     }
 
 
 }
+
