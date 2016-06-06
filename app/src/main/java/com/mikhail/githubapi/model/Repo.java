@@ -11,10 +11,10 @@ public class Repo {
 
     @SerializedName("total_count")
     private int totalCount;
-
     private List<Items> items;
 
     public List<Items> getItems() {
         return items;
     }
+
 }

@@ -2,6 +2,7 @@ package com.mikhail.githubapi.model;
 
 import com.google.gson.annotations.SerializedName;
 
+
 /**
  * Created by Mikhail on 6/4/16.
  */
@@ -13,6 +14,7 @@ public class Items {
     @SerializedName("created_at")
     private String createdAt;
     private Contributor owner;
+
 
     public String getName() {
         return name;
@@ -29,4 +31,5 @@ public class Items {
     public Contributor getOwner() {
         return owner;
     }
+
 }
