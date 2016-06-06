@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.mikhail.githubapi.R;
 import com.mikhail.githubapi.model.Items;
 import com.mikhail.githubapi.model.Repo;
+import com.mikhail.githubapi.util.AppUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private List<Items> repositories;
-    Context context;
+    public Context context;
 
     public RecyclerViewAdapter(List<Items> repositories) {
         this.repositories = repositories;
@@ -37,7 +38,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             headline = (TextView) itemView.findViewById(R.id.repos_headline);
             date = (TextView) itemView.findViewById(R.id.date);
             star = (TextView) itemView.findViewById(R.id.star);
-
 
         }
 
@@ -58,7 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         Items data = repositories.get(position);
         holder.headline.setText(data.getName());
-        holder.date.setText(data.getCreatedAt());
+        holder.date.setText(AppUtils.formatInputDate(data.getCreatedAt()));
         holder.star.setText(String.valueOf(data.getStargazersCount()));
 
     }

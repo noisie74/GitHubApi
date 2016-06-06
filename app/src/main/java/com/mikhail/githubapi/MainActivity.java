@@ -35,8 +35,14 @@ public class MainActivity extends AppCompatActivity {
     protected RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
     private List<Items> gitHubData;
+    private SwipeRefreshLayout swipeContainer;
     public Context context;
-    public SwipeRefreshLayout swipeContainer;
+    public static final String REPOS_DATE = "created:>=";
+    public static final String REPOS_RATING = "star";
+    public static final String REPOS_SORT= "desc";
+    public static final String TAG = "MainActivity";
+
+
 
 
     @Override
@@ -52,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         initRecyclerView();
     }
 
+    /**
+     * set recycler view adapter
+     */
     private void initRecyclerView() {
 
         gitHubData = new ArrayList<>();
@@ -64,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
     private void reposApiCall() {
         GitHubAPIService.GitHubRx gitHub = GitHubAPIService.createRx();
 
-        Observable<Response<Repo>> observable = gitHub.repositories("created:>=" + AppUtils.getLastWeekDate(),"star", "desc");
+        Observable<Response<Repo>> observable =
+                gitHub.repositories(REPOS_DATE + AppUtils.getLastWeekDate(),
+                REPOS_RATING, REPOS_SORT);
 
         observable.observeOn(AndroidSchedulers.mainThread()).
                 subscribeOn(Schedulers.io()).
@@ -77,30 +88,33 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("MainActivity", "Call failed");
+                        Log.d(TAG, "Call failed!");
 
                     }
 
                     @Override
                     public void onNext(Response<Repo> repositories) {
-                        Log.d("MainActivity", "Call made");
+                        Log.d(TAG, "Call success!");
 
-                        gitHubData = repositories.body().getItems();
-
-                        recyclerViewAdapter =
-                                new RecyclerViewAdapter(gitHubData);
-                        recyclerView.setAdapter(recyclerViewAdapter);
-                        recyclerViewAdapter.notifyDataSetChanged();
-                        swipeContainer.setRefreshing(false);
+                        callSuccess(repositories);
 
                     }
                 });
     }
 
+    private void callSuccess(Response<Repo> repositories){
+
+        gitHubData = repositories.body().getItems();
+        recyclerViewAdapter = new RecyclerViewAdapter(gitHubData);
+        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerViewAdapter.notifyDataSetChanged();
+        swipeContainer.setRefreshing(false);
+    }
+
     /**
      * check network connection
      */
-    public void checkNetwork() {
+    private void checkNetwork() {
 
         if (!isConnected(this.context)) {
 

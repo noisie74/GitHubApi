@@ -35,4 +35,7 @@ public class AppUtils {
                 return sdf.format(cal.getTime());
             }
 
+    public static String formatInputDate(String input) {
+        return input.substring(0, input.indexOf('T'));
+    }
 }

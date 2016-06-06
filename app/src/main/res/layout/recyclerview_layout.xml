@@ -2,7 +2,7 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/cardview_margin"
     android:descendantFocusability="blocksDescendants">
 
     <LinearLayout
@@ -22,7 +22,8 @@
                 android:id="@+id/repos_headline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp" />
+                android:maxLines="2"
+                android:textSize="@dimen/headline_text_size" />
 
 
             <TextView
@@ -42,7 +43,8 @@
             <TextView
                 android:id="@+id/star"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/darker_gray"/>
 
             <ImageView
                 android:layout_width="wrap_content"
