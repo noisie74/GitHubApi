@@ -18,10 +18,10 @@ public class ModelObjectAdapter<T> extends RecyclerView.Adapter<ModelObjectAdapt
     private List<T> modelObject;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView contributorTextView;
+        public TextView repositoriesTextView;
         public ViewHolder(TextView v) {
             super(v);
-            contributorTextView = v;
+            repositoriesTextView = v;
         }
     }
 
@@ -32,7 +32,7 @@ public class ModelObjectAdapter<T> extends RecyclerView.Adapter<ModelObjectAdapt
     @Override
     public ModelObjectAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.model_object_text_view, parent, false);
+                .inflate(R.layout.recyclerview_layout, parent, false);
 
         ViewHolder vh = new ViewHolder((TextView)v);
         return vh;
@@ -41,7 +41,7 @@ public class ModelObjectAdapter<T> extends RecyclerView.Adapter<ModelObjectAdapt
     @Override
     public void onBindViewHolder(ModelObjectAdapter.ViewHolder holder, int position) {
         T modelObject = this.modelObject.get(position);
-        holder.contributorTextView.setText(modelObject.toString());
+        holder.repositoriesTextView.setText(modelObject.toString());
     }
 
     @Override

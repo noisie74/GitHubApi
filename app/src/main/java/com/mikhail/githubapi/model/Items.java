@@ -10,6 +10,9 @@ public class Items {
     private String name;
     @SerializedName("stargazers_count")
     private int stargazersCount;
+    @SerializedName("created_at")
+    private String createdAt;
+    private Contributor owner;
 
     public String getName() {
         return name;
@@ -17,5 +20,13 @@ public class Items {
 
     public int getStargazersCount() {
         return stargazersCount;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public Contributor getOwner() {
+        return owner;
     }
 }

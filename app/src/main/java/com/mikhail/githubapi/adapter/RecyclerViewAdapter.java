@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mikhail.githubapi.R;
+import com.mikhail.githubapi.model.Items;
 import com.mikhail.githubapi.model.Repo;
 
 import java.util.ArrayList;
@@ -18,22 +19,25 @@ import java.util.List;
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<Repo> repositories;
+    private List<Items> repositories;
     Context context;
 
-    public RecyclerViewAdapter(List<Repo> repositories) {
+    public RecyclerViewAdapter(List<Items> repositories) {
         this.repositories = repositories;
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView headline;
+        private TextView headline, date, star;
 
         public ViewHolder(final View itemView) {
             super(itemView);
 
             headline = (TextView) itemView.findViewById(R.id.repos_headline);
+            date = (TextView) itemView.findViewById(R.id.date);
+            star = (TextView) itemView.findViewById(R.id.star);
+
 
         }
 
@@ -52,8 +56,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Repo data = repositories.get(position);
-        holder.headline.setText(data.getItems().get(position).getName());
+        Items data = repositories.get(position);
+        holder.headline.setText(data.getName());
+        holder.date.setText(data.getCreatedAt());
+        holder.star.setText(String.valueOf(data.getStargazersCount()));
 
     }
 

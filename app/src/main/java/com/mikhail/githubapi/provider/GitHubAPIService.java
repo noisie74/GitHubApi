@@ -4,7 +4,11 @@ package com.mikhail.githubapi.provider;
 import com.mikhail.githubapi.model.Repo;
 
 import java.util.List;
+import java.util.logging.Level;
 
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -20,6 +24,7 @@ public class GitHubAPIService {
 
     public static final String API_URL = "https://api.github.com/search/";
 
+
     public static GitHubRx createRx() {
         return new Retrofit.Builder()
                 .baseUrl(API_URL)
@@ -31,9 +36,10 @@ public class GitHubAPIService {
 
     public interface GitHubRx {
         @GET("repositories")
-        Observable<List<Repo>> repositories(
-                @Query("q") String query);
-//                @Query("sort") String rating);
+        Observable<Response<Repo>> repositories(
+                @Query("q") String query,
+                @Query("sort") String rating,
+                @Query("order") String orderBy);
     }
 
 
