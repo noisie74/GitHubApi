@@ -13,6 +13,9 @@ public class Contributor {
     private String avatarUrl;
     @SerializedName("html_url")
     private String htmlUrl;
+    @SerializedName("contributions")
+    private long contribution;
+
 
     public String getUserLogin() {
         return userLogin;
