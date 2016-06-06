@@ -1,23 +1,20 @@
 package com.mikhail.githubapi.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 /**
  * Created by Mikhail on 6/4/16.
  */
 public class Repo {
 
-    public final String name;
-    private Items[] items;
+    @SerializedName("total_count")
+    private int totalCount;
+    private List<Items> items;
 
-    public Repo(String name, String url) {
-        this.name = name;
+    public List<Items> getItems() {
+        return items;
     }
 
-   public Items[] getItems(){
-       return items;
-   }
-
-    @Override
-    public String toString() {
-        return String.format("%s", name);
-    }
 }
