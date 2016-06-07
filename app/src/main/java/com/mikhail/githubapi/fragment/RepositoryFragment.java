@@ -23,6 +23,7 @@ import com.mikhail.githubapi.model.Items;
 import com.mikhail.githubapi.model.Repo;
 import com.mikhail.githubapi.provider.GitHubAPIService;
 import com.mikhail.githubapi.util.AppUtils;
+import com.mikhail.githubapi.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,10 +48,6 @@ public class RepositoryFragment extends Fragment {
     private List<Items> gitHubData;
     private SwipeRefreshLayout swipeContainer;
     public Context context;
-    public static final String REPOS_DATE = "created:>=";
-    public static final String REPOS_RATING = "star";
-    public static final String REPOS_SORT= "desc";
-    public static final String TAG = "MainActivity";
     private View v;
 
 
@@ -63,9 +60,9 @@ public class RepositoryFragment extends Fragment {
 
         initRecyclerView(v);
         setPullRefresh();
-
         checkNetwork();
         reposApiCall();
+        reposClickListener();
 
         return v;
     }
@@ -84,8 +81,8 @@ public class RepositoryFragment extends Fragment {
         GitHubAPIService.GitHubRx gitHub = GitHubAPIService.createRx();
 
         Observable<Response<Repo>> observable =
-                gitHub.repositories(REPOS_DATE + AppUtils.getLastWeekDate(),
-                        REPOS_RATING, REPOS_SORT);
+                gitHub.repositories(Constants.REPOS_DATE + AppUtils.getLastWeekDate(),
+                        Constants.REPOS_RATING, Constants.REPOS_SORT);
 
         observable.observeOn(AndroidSchedulers.mainThread()).
                 subscribeOn(Schedulers.io()).
@@ -98,13 +95,13 @@ public class RepositoryFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(TAG, "Call failed!");
+                        Log.d(Constants.REPOS_TAG, "Call failed!");
 
                     }
 
                     @Override
                     public void onNext(Response<Repo> repositories) {
-                        Log.d(TAG, "Call success!");
+                        Log.d(Constants.REPOS_TAG, "Call success!");
 
                         callSuccess(repositories);
 
@@ -162,30 +159,30 @@ public class RepositoryFragment extends Fragment {
 
     }
 
-//    private void reposClickListener(){
-//
-//        if (repositoryAdapter != null){
-//
-//            repositoryAdapter.setOnItemClickListener(new RepositoryAdapter.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(View itemView, int position) {
-//
-//                    Items item = gitHubData.get(position);
-//
-//                    ContributorFragment contributorFragment = new ContributorFragment();
-//
-//                    Bundle args = new Bundle();
-//                    args.putInt("contributorFragment", position);
-//                    contributorFragment.setArguments(args);
-//                    contributorFragment.setUrl(item.getContributorURL());
-//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                    fragmentTransaction.replace(R.id.relative_layout, contributorFragment);
-//                    fragmentTransaction.commit();
-//                    Log.d(TAG, "Fragment transition on click!");
-//                }
-//            });
-//        }
-//
-//
-//    }
+    private void reposClickListener(){
+
+        if (repositoryAdapter != null){
+
+            repositoryAdapter.setOnItemClickListener(new RepositoryAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View itemView, int position) {
+
+                    Items item = gitHubData.get(position);
+
+                    ContributorFragment contributorFragment = new ContributorFragment();
+
+                    Bundle args = new Bundle();
+                    args.putInt("contributorFragment", position);
+                    contributorFragment.setArguments(args);
+                    contributorFragment.setUrl(item.getContributorURL());
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frag_container, contributorFragment);
+                    fragmentTransaction.commit();
+                    Log.d("RepositoryFragment", "Fragment transition on click!");
+                }
+            });
+        }
+
+
+    }
 }

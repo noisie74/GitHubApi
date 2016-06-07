@@ -17,6 +17,7 @@ import com.mikhail.githubapi.adapter.ContributorAdapter;
 import com.mikhail.githubapi.model.Contributor;
 import com.mikhail.githubapi.model.Items;
 import com.mikhail.githubapi.provider.GitHubAPIService;
+import com.mikhail.githubapi.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class ContributorFragment extends Fragment {
     private ContributorAdapter contributorAdapter;
     private List<Contributor> contributors;
     private List<Items> gitHubItems;
-    private RecyclerView contributorRecyclerView;
+    protected RecyclerView recyclerView;
     private String url;
 
 
@@ -48,7 +49,7 @@ public class ContributorFragment extends Fragment {
 
         // Hit API to get Contributors for the selected repository if network
 //        getContributors(getArguments().getInt("contributorFragment" ));
-        getContributors();
+          getContributors();
     }
 
     @Nullable
@@ -56,24 +57,27 @@ public class ContributorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.fragment_contributor_layout, container, false);
-        contributorName = (TextView) v.findViewById(R.id.contributor_name);
-        contribution = (TextView) v.findViewById(R.id.contribution);
-        contributorImage = (ImageView) v.findViewById(R.id.img_contributor);
-
-
-        contributorRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
-        RecyclerView.LayoutManager contributorLayoutManager = new LinearLayoutManager(getActivity());
-        contributorRecyclerView.setLayoutManager(contributorLayoutManager);
+//        contributorName = (TextView) v.findViewById(R.id.contributor_name);
+//        contribution = (TextView) v.findViewById(R.id.contribution);
+//        contributorImage = (ImageView) v.findViewById(R.id.img_contributor);
 
         contributors = new ArrayList<>();
 
+        initRecyclerView();
+
+
         // specify an adapter to hold contributor list
-        contributorAdapter = new ContributorAdapter(getActivity());
-        contributorRecyclerView.setAdapter(contributorAdapter);
 
         return v;
     }
 
+    private void initRecyclerView() {
+        recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
+//        RecyclerView.LayoutManager contributorLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        contributorAdapter = new ContributorAdapter(getContext());
+        recyclerView.setAdapter(contributorAdapter);
+    }
 
     private void getContributors() {
 
@@ -81,7 +85,7 @@ public class ContributorFragment extends Fragment {
         GitHubAPIService.GitHubRx gitHub = GitHubAPIService.createRx();
 
         Observable<Response<Contributor>> observable =
-                gitHub.contributors(gitHubItems.get(0).getOwner().getUserLogin(),
+                gitHub.contributors(contributors.get(0).getUserLogin(),
                         gitHubItems.get(0).getName());
 
         observable.observeOn(AndroidSchedulers.mainThread()).
@@ -95,16 +99,16 @@ public class ContributorFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("Contributor", "Call failed!");
+                        Log.d(Constants.CONTR_TAG, "Call failed!");
 
                     }
 
                     @Override
                     public void onNext(Response<Contributor> contributors) {
-                        Log.d("Contributor", "Call success!");
+                        Log.d(Constants.CONTR_TAG, "Call success!");
 
                         contributorAdapter = new ContributorAdapter(getContext());
-                        contributorRecyclerView.setAdapter(contributorAdapter);
+                        recyclerView.setAdapter(contributorAdapter);
                         contributorAdapter.notifyDataSetChanged();
                     }
                 });
