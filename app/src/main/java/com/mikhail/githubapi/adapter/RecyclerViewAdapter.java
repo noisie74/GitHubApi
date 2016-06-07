@@ -22,11 +22,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private List<Items> repositories;
     public Context context;
+    private OnItemClickListener listener;
+
 
     public RecyclerViewAdapter(List<Items> repositories) {
         this.repositories = repositories;
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(View itemView, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -39,6 +48,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             date = (TextView) itemView.findViewById(R.id.date);
             star = (TextView) itemView.findViewById(R.id.star);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null)
+                        listener.onItemClick(itemView, getLayoutPosition());
+                }
+            });
         }
 
     }
@@ -70,3 +86,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 }
 
+
+//    private void bindData(final RepositoryItem data, MyViewHolder holder) {
+//        holder.parentView.setTag(holder);
+//        holder.name.setText(data.getName());
+//        holder.language.setText(data.getLanguage());
+//        holder.date.setText(MyUtils.formatInputDate(data.getCreatedAt()));
+//        holder.star.setText(String.valueOf(data.getStargazersCount()));
+//
+//        holder.parentView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                goToShowDevInfo(data.getOwner());
+//            }
+//        });
+//
+//    }
+//
+//    private void goToShowDevInfo(Contributor contributor) {
+//        Intent mpdIntent = new Intent(mActivity, ContributorActivity.class)
+//                .putExtra(ContributorActivity.EXTRAS_OWNER, contributor);
+//        mActivity.startActivity(mpdIntent);
+//    }
