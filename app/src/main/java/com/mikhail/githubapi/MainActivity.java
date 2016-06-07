@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.mikhail.githubapi.adapter.RecyclerViewAdapter;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setPullRefresh();
         reposApiCall();
         initRecyclerView();
+        reposClickListener();
     }
 
     /**
@@ -154,7 +156,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void reposClickListener(){
 
-        recyclerViewAdapter.setOnItemClickListener();
+        if (recyclerViewAdapter != null){
+
+            recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View itemView, int position) {
+
+                     gitHubData.get(position);
+
+                }
+            });
+        }
+
+
     }
 
 }
