@@ -3,6 +3,8 @@ package com.mikhail.githubapi;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.mikhail.githubapi.adapter.RecyclerViewAdapter;
+import com.mikhail.githubapi.fragment.ContributorFragment;
 import com.mikhail.githubapi.model.Items;
 import com.mikhail.githubapi.model.Repo;
 import com.mikhail.githubapi.provider.GitHubAPIService;
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String REPOS_RATING = "star";
     public static final String REPOS_SORT= "desc";
     public static final String TAG = "MainActivity";
+    FragmentManager fragmentManager;
 
 
 
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         context = getApplicationContext();
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        fragmentManager = getSupportFragmentManager();
 
         checkNetwork();
         setPullRefresh();
@@ -162,8 +167,12 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(View itemView, int position) {
 
-                     gitHubData.get(position);
+                    gitHubData.get(position);
 
+                    ContributorFragment contributorFragment = new ContributorFragment();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(R.id.relative_layout, contributorFragment);
+                    fragmentTransaction.commit();
                 }
             });
         }
