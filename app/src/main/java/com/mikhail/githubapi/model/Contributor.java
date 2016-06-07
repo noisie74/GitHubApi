@@ -28,4 +28,8 @@ public class Contributor {
     public String getHtmlUrl() {
         return htmlUrl;
     }
+
+    public long getContribution() {
+        return contribution;
+    }
 }

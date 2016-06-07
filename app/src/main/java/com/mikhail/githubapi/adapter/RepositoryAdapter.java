@@ -9,23 +9,21 @@ import android.widget.TextView;
 
 import com.mikhail.githubapi.R;
 import com.mikhail.githubapi.model.Items;
-import com.mikhail.githubapi.model.Repo;
 import com.mikhail.githubapi.util.AppUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Mikhail on 4/17/16.
  */
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.ViewHolder> {
 
     private List<Items> repositories;
     public Context context;
     private OnItemClickListener listener;
 
 
-    public RecyclerViewAdapter(List<Items> repositories) {
+    public RepositoryAdapter(List<Items> repositories) {
         this.repositories = repositories;
     }
 

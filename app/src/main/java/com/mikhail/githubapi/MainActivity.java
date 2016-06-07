@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.mikhail.githubapi.adapter.RecyclerViewAdapter;
+import com.mikhail.githubapi.adapter.RepositoryAdapter;
 import com.mikhail.githubapi.fragment.ContributorFragment;
 import com.mikhail.githubapi.model.Items;
 import com.mikhail.githubapi.model.Repo;
@@ -37,7 +37,7 @@ import static com.mikhail.githubapi.util.AppUtils.isConnected;
 public class MainActivity extends AppCompatActivity {
 
     protected RecyclerView recyclerView;
-    private RecyclerViewAdapter recyclerViewAdapter;
+    private RepositoryAdapter repositoryAdapter;
     private List<Items> gitHubData;
     private SwipeRefreshLayout swipeContainer;
     public Context context;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String REPOS_RATING = "star";
     public static final String REPOS_SORT= "desc";
     public static final String TAG = "MainActivity";
-    FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
 
 
 
@@ -71,10 +71,10 @@ public class MainActivity extends AppCompatActivity {
     private void initRecyclerView() {
 
         gitHubData = new ArrayList<>();
-        recyclerViewAdapter = new RecyclerViewAdapter(gitHubData);
+        repositoryAdapter = new RepositoryAdapter(gitHubData);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setAdapter(repositoryAdapter);
     }
 
     private void reposApiCall() {
@@ -112,9 +112,9 @@ public class MainActivity extends AppCompatActivity {
     private void callSuccess(Response<Repo> repositories){
 
         gitHubData = repositories.body().getItems();
-        recyclerViewAdapter = new RecyclerViewAdapter(gitHubData);
-        recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerViewAdapter.notifyDataSetChanged();
+        repositoryAdapter = new RepositoryAdapter(gitHubData);
+        recyclerView.setAdapter(repositoryAdapter);
+        repositoryAdapter.notifyDataSetChanged();
         swipeContainer.setRefreshing(false);
     }
 
@@ -161,15 +161,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void reposClickListener(){
 
-        if (recyclerViewAdapter != null){
+        if (repositoryAdapter != null){
 
-            recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
+            repositoryAdapter.setOnItemClickListener(new RepositoryAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View itemView, int position) {
 
                     gitHubData.get(position);
 
                     ContributorFragment contributorFragment = new ContributorFragment();
+
+                    Bundle args = new Bundle();
+                    args.putInt("contributorFragment", position);
+                    contributorFragment.setArguments(args);
+
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.add(R.id.relative_layout, contributorFragment);
                     fragmentTransaction.commit();
