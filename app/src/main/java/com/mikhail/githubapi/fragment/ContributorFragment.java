@@ -17,6 +17,7 @@ import com.mikhail.githubapi.R;
 import com.mikhail.githubapi.adapter.ContributorAdapter;
 import com.mikhail.githubapi.adapter.RepositoryAdapter;
 import com.mikhail.githubapi.model.Contributor;
+import com.mikhail.githubapi.model.Items;
 import com.mikhail.githubapi.model.Repo;
 import com.mikhail.githubapi.provider.GitHubAPIService;
 import com.mikhail.githubapi.util.AppUtils;
@@ -40,7 +41,9 @@ public class ContributorFragment extends Fragment {
     protected ImageView contributorImage;
     private ContributorAdapter contributorAdapter;
     private List<Contributor> contributors;
+    private List<Items> gitHubItems;
     private RecyclerView contributorRecyclerView;
+    private String url;
 
 
     @Override
@@ -48,7 +51,7 @@ public class ContributorFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         // Hit API to get Contributors for the selected repository if network
-        getContributors(getArguments().getInt("contributorFragment");
+//        getContributors(getArguments().getInt("contributorFragment" ));
     }
 
     @Nullable
@@ -80,14 +83,14 @@ public class ContributorFragment extends Fragment {
 
         GitHubAPIService.GitHubRx gitHub = GitHubAPIService.createRx();
 
-        Observable<Response<Repo>> observable =
-                gitHub.repositories(MainActivity.REPOS_DATE + AppUtils.getLastWeekDate(),
-                        MainActivity.REPOS_RATING, MainActivity.REPOS_SORT);
+        Observable<Response<Contributor>> observable =
+                gitHub.contributors(gitHubItems.get(0).getOwner().getUserLogin(),
+                        gitHubItems.get(0).getName());
 
         observable.observeOn(AndroidSchedulers.mainThread()).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
-                subscribe(new Subscriber<Response<Repo>>() {
+                subscribe(new Subscriber<Response<Contributor>>() {
                     @Override
                     public void onCompleted() {
 
@@ -95,30 +98,25 @@ public class ContributorFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(MainActivity.TAG, "Call failed!");
+                        Log.d("Contributor", "Call failed!");
 
                     }
 
                     @Override
-                    public void onNext(Response<Repo> repositories) {
-                        Log.d(MainActivity.TAG, "Call success!");
+                    public void onNext(Response<Contributor> contributors) {
+                        Log.d("Contributor", "Call success!");
 
-                        callSuccess(repositories);
-
+                        contributorAdapter = new ContributorAdapter(getContext());
+                        contributorRecyclerView.setAdapter(contributorAdapter);
+                        contributorAdapter.notifyDataSetChanged();
                     }
                 });
     }
+    
 
-
-    private void callSuccess(Response<Repo> repositories, int position){
-
-        contributors = repositories.body().getContributorURL();
-
-        String url = contributors.get(position).getHtmlUrl() ;
-
-
-        contributorAdapter = new ContributorAdapter();
-        contributorRecyclerView.setAdapter(contributorAdapter);
-        contributorAdapter.notifyDataSetChanged();
+    public void setUrl(String url) {
+        this.url = url;
     }
+
+
 }

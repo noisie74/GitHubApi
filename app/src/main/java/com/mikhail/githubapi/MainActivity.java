@@ -167,14 +167,14 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(View itemView, int position) {
 
-                    gitHubData.get(position);
+                    Items item = gitHubData.get(position);
 
                     ContributorFragment contributorFragment = new ContributorFragment();
 
                     Bundle args = new Bundle();
                     args.putInt("contributorFragment", position);
                     contributorFragment.setArguments(args);
-
+                    contributorFragment.setUrl(item.getContributorURL());
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.add(R.id.relative_layout, contributorFragment);
                     fragmentTransaction.commit();

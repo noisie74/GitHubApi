@@ -14,7 +14,8 @@ public class Items {
     @SerializedName("created_at")
     private String createdAt;
     private Contributor owner;
-
+    @SerializedName("contributors_url")
+    private String contributorURL;
 
     public String getName() {
         return name;
@@ -32,4 +33,7 @@ public class Items {
         return owner;
     }
 
+    public String getContributorURL() {
+        return contributorURL;
+    }
 }
