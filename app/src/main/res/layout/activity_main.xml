@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/swipeContainer"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,12 +11,11 @@
     android:background="@android:color/holo_blue_dark"
     tools:context="com.mikhail.githubapi.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
-        android:scrollbars="vertical"
+    <FrameLayout
+        android:id="@+id/frag_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+    </FrameLayout>
 
 </RelativeLayout>
 
-</android.support.v4.widget.SwipeRefreshLayout>

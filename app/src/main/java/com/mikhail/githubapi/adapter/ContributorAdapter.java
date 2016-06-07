@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.mikhail.githubapi.R;
 import com.mikhail.githubapi.model.Contributor;
-import com.mikhail.githubapi.model.Items;
-import com.mikhail.githubapi.util.AppUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -55,7 +53,7 @@ public class ContributorAdapter extends RecyclerView.Adapter<ContributorAdapter.
                                                             int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_layout, parent, false);
+                .inflate(R.layout.fragment_contributor_layout, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }

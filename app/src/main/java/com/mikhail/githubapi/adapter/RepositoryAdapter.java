@@ -62,7 +62,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.recyclerview_layout, parent, false);
+        View view = inflater.inflate(R.layout.fragment_repo_layout, parent, false);
         ViewHolder vh = new ViewHolder(view);
 
         return vh;
