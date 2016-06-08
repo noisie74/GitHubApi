@@ -51,8 +51,6 @@ public class RepositoryFragment extends Fragment {
     private View v;
 
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,20 +95,20 @@ public class RepositoryFragment extends Fragment {
                     @Override
                     public void onError(Throwable e) {
                         Log.d(Constants.REPOS_TAG, "Call failed!");
+                        swipeContainer.setRefreshing(false);
 
                     }
 
                     @Override
                     public void onNext(Response<Repo> repositories) {
                         Log.d(Constants.REPOS_TAG, "Call success!");
-
                         callSuccess(repositories);
 
                     }
                 });
     }
 
-    private void callSuccess(Response<Repo> repositories){
+    private void callSuccess(Response<Repo> repositories) {
 
         gitHubData = repositories.body().getItems();
         repositoryAdapter = new RepositoryAdapter(gitHubData);
@@ -160,24 +158,29 @@ public class RepositoryFragment extends Fragment {
 
     }
 
-    private void reposClickListener(){
+    private void reposClickListener() {
 
-//        if (repositoryAdapter != null){
+        if (repositoryAdapter != null) {
 
             repositoryAdapter.setOnItemClickListener(new RepositoryAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View itemView, int position) {
 
-                    Items item = gitHubData.get(position);
+//                    Items item = gitHubData.get(position);
 
                     ContributorFragment contributorFragment = new ContributorFragment();
 
                     Bundle args = new Bundle();
 
-                    args.putInt("contributorFragment", position);
+                    String[] clickedRepository = {gitHubData.get(position).getOwner().getUserLogin(),
+                            gitHubData.get(position).getName()};
+
+                    args.putStringArray(Constants.SELECTED_REPOSITORY, clickedRepository);
+
+//                    args.putInt("contributorFragment", position);
                     contributorFragment.setArguments(args);
 
-                    contributorFragment.setUrl(item.getContributorURL());
+//                    contributorFragment.setUrl(item.getContributorURL());
 
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.frag_container, contributorFragment);
@@ -188,5 +191,5 @@ public class RepositoryFragment extends Fragment {
         }
 
 
-//    }
+    }
 }

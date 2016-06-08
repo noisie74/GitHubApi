@@ -25,12 +25,15 @@ public class ContributorObjectAdapter extends RecyclerView.Adapter<ContributorOb
         public final ImageView contributorImageView;
         public final TextView contributorNameTextView;
         public final TextView contributionsTextView;
+        public final TextView contributorURL;
 
         public ViewHolder(View v) {
             super(v);
             contributorImageView = (ImageView) v.findViewById(R.id.img_contributor);
             contributorNameTextView = (TextView) v.findViewById(R.id.contributor_name);
             contributionsTextView = (TextView) v.findViewById(R.id.contribution);
+            contributorURL = (TextView) v.findViewById(R.id.contributor_url);
+
         }
     }
 
@@ -57,13 +60,12 @@ public class ContributorObjectAdapter extends RecyclerView.Adapter<ContributorOb
         Contributor data = this.contributors.get(position);
 
         holder.contributorNameTextView.setText(data.getUserLogin());
-//        holder.contributionsTextView.setText((int) data.getContribution());
+        holder.contributionsTextView.setText(context.getString(R.string.contributions) + data.getContribution());
+        holder.contributorURL.setText(data.getHtmlUrl());
         Picasso.with(context)
                 .load(data.getAvatarUrl())
                 .placeholder(R.drawable.githubholder)
                 .into(holder.contributorImageView);
-
-//        holder.contributionsTextView.setText(modelObject.toString());
     }
 
     @Override
