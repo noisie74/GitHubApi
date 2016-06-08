@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.mikhail.githubapi.R;
-import com.mikhail.githubapi.adapter.ContributorAdapter;
 import com.mikhail.githubapi.adapter.ContributorObjectAdapter;
 import com.mikhail.githubapi.model.Contributor;
 import com.mikhail.githubapi.provider.GitHubAPIService;
@@ -41,7 +40,6 @@ public class ContributorFragment extends Fragment  {
 
     protected View v;
     protected Context context;
-    private ContributorAdapter contributorAdapter;
     private ContributorObjectAdapter contributorObjectAdapter;
     private SwipeRefreshLayout swipeContainer;
     private List<Contributor> contributors;
@@ -90,7 +88,6 @@ public class ContributorFragment extends Fragment  {
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         contributorObjectAdapter = new ContributorObjectAdapter(contributors);
-        recyclerView.setAdapter(contributorAdapter);
 
     }
 
@@ -177,9 +174,9 @@ public class ContributorFragment extends Fragment  {
 
 //                        Collections.addAll();
 
-                        contributorAdapter = new ContributorAdapter((List<Contributor>) contributors.body());
-                        recyclerView.setAdapter(contributorAdapter);
-                        contributorAdapter.notifyDataSetChanged();
+//                        contributorAdapter = new ContributorAdapter((List<Contributor>) contributors.body());
+//                        recyclerView.setAdapter(contributorAdapter);
+//                        contributorAdapter.notifyDataSetChanged();
                     }
                 });
     }

@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:id="@+id/relative_layout"
     android:background="@android:color/holo_blue_dark"
-    tools:context="com.mikhail.githubapi.MainActivity">
+    tools:context=".activity.MainActivity">
 
     <FrameLayout
         android:id="@+id/frag_container"

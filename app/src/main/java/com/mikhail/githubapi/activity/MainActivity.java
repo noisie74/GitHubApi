@@ -1,4 +1,4 @@
-package com.mikhail.githubapi;
+package com.mikhail.githubapi.activity;
 
 
 import android.support.v4.app.FragmentManager;
@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
+import com.mikhail.githubapi.R;
 import com.mikhail.githubapi.fragment.ContributorFragment;
 import com.mikhail.githubapi.fragment.RepositoryFragment;
 import com.mikhail.githubapi.interfaces.ControlActionBar;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements ControlActionBar 
         super.onResume();
         setFragment();
 
+        //TODO create method to check which fragment to show
     }
 
     private void setFragment() {
@@ -55,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements ControlActionBar 
     }
 
     public void onBackPressed() {
+
+        //TODO fix back button to show repository fragment when pressed from contributor fr
+
 
         if (contributorFragment != null) {
             setFragment();
