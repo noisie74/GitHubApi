@@ -9,6 +9,6 @@ public class Constants {
     public static final String REPOS_RATING = "star";
     public static final String REPOS_SORT= "desc";
     public static final String REPOS_TAG = "RepositoryFragment";
-    public static final String CONTR_TAG = "RepositoryFragment";
+    public static final String CONTR_TAG = "ContributorFragment";
 
 }

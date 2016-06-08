@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class ContributorAdapter extends RecyclerView.Adapter<ContributorAdapter.ViewHolder> {
 
-    private final Context context;
+    private  Context context;
     private List<Contributor> contributors;
 
     // Provide a reference to the views for each data item
@@ -44,29 +44,31 @@ public class ContributorAdapter extends RecyclerView.Adapter<ContributorAdapter.
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ContributorAdapter(Context context) {
-        this.context = context;
+    public ContributorAdapter(List<Contributor> contributors) {
+        this.contributors = contributors;
     }
 
     @Override
     public ContributorAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                             int viewType) {
-        // create a new view
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_contributor_layout, parent, false);
+
+        context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View v = inflater.inflate(R.layout.fragment_contributor_layout, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Contributor data = contributors.get(position);
-        holder.contributorNameTextView.setText(data.getUserLogin());
-        holder.contributionsTextView.setText("Contributions: " + data.getContribution());
-        Picasso.with(context)
-                .load(data.getAvatarUrl())
-                .placeholder(R.drawable.githubholder)
-                .into(holder.contributorImageView);
+//        holder.contributorNameTextView.setText(data.getUserLogin());
+//        holder.contributionsTextView.setText("Contributions: " + data.getContribution());
+//        Picasso.with(context)
+//                .load(data.getAvatarUrl())
+//                .placeholder(R.drawable.githubholder)
+//                .into(holder.contributorImageView);
 
     }
 

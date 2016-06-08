@@ -51,5 +51,20 @@ public class GitHubAPIService {
     }
 
 
+    public interface GitHub {
+        @GET("/repos/{owner}/{repo}/contributors")
+        Call<List<Contributor>> contributors(
+                @Path("owner") String owner,
+                @Path("repo") String repo);
+    }
+
+    public static GitHub create() {
+        return new Retrofit.Builder()
+                .baseUrl(API_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(GitHubAPIService.GitHub.class);
+    }
+
 }
 

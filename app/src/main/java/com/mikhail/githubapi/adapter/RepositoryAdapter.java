@@ -20,7 +20,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
 
     private List<Items> repositories;
     public Context context;
-    private OnItemClickListener listener;
+    public static OnItemClickListener listener;
 
 
     public RepositoryAdapter(List<Items> repositories) {

@@ -52,6 +52,7 @@ public class RepositoryFragment extends Fragment {
 
 
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -161,7 +162,7 @@ public class RepositoryFragment extends Fragment {
 
     private void reposClickListener(){
 
-        if (repositoryAdapter != null){
+//        if (repositoryAdapter != null){
 
             repositoryAdapter.setOnItemClickListener(new RepositoryAdapter.OnItemClickListener() {
                 @Override
@@ -172,9 +173,12 @@ public class RepositoryFragment extends Fragment {
                     ContributorFragment contributorFragment = new ContributorFragment();
 
                     Bundle args = new Bundle();
+
                     args.putInt("contributorFragment", position);
                     contributorFragment.setArguments(args);
+
                     contributorFragment.setUrl(item.getContributorURL());
+
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.frag_container, contributorFragment);
                     fragmentTransaction.commit();
@@ -184,5 +188,5 @@ public class RepositoryFragment extends Fragment {
         }
 
 
-    }
+//    }
 }
