@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.mikhail.githubapi.R;
-import com.mikhail.githubapi.adapter.ContributorObjectAdapter;
+import com.mikhail.githubapi.adapter.ContributorAdapter;
 import com.mikhail.githubapi.model.Contributor;
 import com.mikhail.githubapi.provider.GitHubAPIService;
 import com.mikhail.githubapi.util.Constants;
@@ -26,10 +26,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 import static com.mikhail.githubapi.util.AppUtils.isConnected;
 import com.mikhail.githubapi.interfaces.ControlActionBar;
@@ -43,7 +39,7 @@ public class ContributorFragment extends Fragment  {
 
     protected View v;
     protected Context context;
-    private ContributorObjectAdapter contributorObjectAdapter;
+    private ContributorAdapter contributorAdapter;
     private SwipeRefreshLayout swipeContainer;
     private List<Contributor> contributors;
     protected RecyclerView recyclerView;
@@ -90,7 +86,7 @@ public class ContributorFragment extends Fragment  {
     private void initRecyclerView(View v) {
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        contributorObjectAdapter = new ContributorObjectAdapter(contributors);
+        contributorAdapter = new ContributorAdapter(contributors);
 
     }
 
@@ -108,12 +104,12 @@ public class ContributorFragment extends Fragment  {
         call.enqueue(new Callback<List<Contributor>>() {
             @Override
             public void onResponse(Call<List<Contributor>> call, Response<List<Contributor>> response) {
-                List<Contributor> contributors = response.body();
                 Log.d(Constants.CONTR_TAG, "Call success!");
+                List<Contributor> contributors = response.body();
 
                 Collection<Contributor> frequentContributors = Filter.isFrequentContributor(contributors);
-                contributorObjectAdapter = new ContributorObjectAdapter(new ArrayList(frequentContributors));
-                recyclerView.setAdapter(contributorObjectAdapter);
+                contributorAdapter = new ContributorAdapter(new ArrayList(frequentContributors));
+                recyclerView.setAdapter(contributorAdapter);
                 swipeContainer.setRefreshing(false);
                 setPullRefresh();
             }
@@ -127,7 +123,6 @@ public class ContributorFragment extends Fragment  {
             }
         });
     }
-
 
     private void setPullRefresh() {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

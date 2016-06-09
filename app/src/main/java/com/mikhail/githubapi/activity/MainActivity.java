@@ -26,25 +26,15 @@ public class MainActivity extends AppCompatActivity implements ControlActionBar 
         setContentView(R.layout.activity_main);
         fragContainer = (FrameLayout) findViewById(R.id.frag_container);
         contributorFragment = new ContributorFragment();
+        repositoryFragment = new RepositoryFragment();
         setFragment();
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        setFragment();
-
-        //TODO create method to check which fragment to show
     }
 
     private void setFragment() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        repositoryFragment = new RepositoryFragment();
-
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
         fragmentTransaction.replace(R.id.frag_container, repositoryFragment, RepositoryFragment.class.getName());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
@@ -58,33 +48,15 @@ public class MainActivity extends AppCompatActivity implements ControlActionBar 
 
     }
 
+    @Override
     public void onBackPressed() {
 
-        //TODO fix back button to show repository fragment when pressed from contributor fr
-
-        FragmentManager m = getSupportFragmentManager();
-        ContributorFragment contributorFragment = (ContributorFragment) m.findFragmentByTag(ContributorFragment.class.getName());
-        if(contributorFragment != null){
-            FragmentTransaction t = m.beginTransaction();
-            t.remove(contributorFragment);
-            t.commit();
+        if (contributorFragment != null) {
             setFragment();
+            contributorFragment = null;
         }
-
-
-//
-//        if (contributorFragment != null) {
-//            setFragment();
-//            contributorFragment = null;
-//        } if (repositoryFragment == null){
-//            setFragment();
-//        }
-//        if (repositoryFragment != null) {
-//            super.onBackPressed();
-//        }
         super.onBackPressed();
     }
-
 }
 
 

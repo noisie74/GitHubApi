@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ContributorObjectAdapter extends RecyclerView.Adapter<ContributorObjectAdapter.ViewHolder> {
+public class ContributorAdapter extends RecyclerView.Adapter<ContributorAdapter.ViewHolder> {
     private List<Contributor> contributors;
     private Context context;
 
@@ -36,12 +36,12 @@ public class ContributorObjectAdapter extends RecyclerView.Adapter<ContributorOb
         }
     }
 
-    public ContributorObjectAdapter(List<Contributor> contributors) {
+    public ContributorAdapter(List<Contributor> contributors) {
         this.contributors = contributors;
     }
 
     @Override
-    public ContributorObjectAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ContributorAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_contributor_layout, parent, false);
 

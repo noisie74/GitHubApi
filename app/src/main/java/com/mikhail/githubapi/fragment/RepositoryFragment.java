@@ -50,6 +50,7 @@ public class RepositoryFragment extends Fragment {
     private SwipeRefreshLayout swipeContainer;
     public Context context;
     private View v;
+    private Bundle args;
 
 
     @Nullable
@@ -129,11 +130,11 @@ public class RepositoryFragment extends Fragment {
                 @Override
                 public void run() {
                     Activity a = getActivity();
-                    if(a == null) return;
+                    if (a == null) return;
                     Intent intent = new Intent(Settings.ACTION_SETTINGS);
                     startActivity(intent);
                 }
-            }, 1600);
+            }, 3000);
 
             Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
             swipeContainer.setRefreshing(false);
@@ -169,30 +170,28 @@ public class RepositoryFragment extends Fragment {
                 @Override
                 public void onItemClick(View itemView, int position) {
 
-//                    Items item = gitHubData.get(position);
+                    setBundle(itemView, position);
+                    setContributorFragment(args);
 
-                    ContributorFragment contributorFragment = new ContributorFragment();
-
-                    Bundle args = new Bundle();
-
-                    String[] clickedRepository = {gitHubData.get(position).getOwner().getUserLogin(),
-                            gitHubData.get(position).getName()};
-
-                    args.putStringArray(Constants.SELECTED_REPOSITORY, clickedRepository);
-
-//                    args.putInt("contributorFragment", position);
-                    contributorFragment.setArguments(args);
-
-//                    contributorFragment.setUrl(item.getContributorURL());
-
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.frag_container, contributorFragment, ContributorFragment.class.getName());
-                    fragmentTransaction.commit();
-                    Log.d("RepositoryFragment", "Fragment transition on click!");
                 }
             });
         }
 
+    }
 
+    private void setContributorFragment(Bundle args) {
+        ContributorFragment contributorFragment = new ContributorFragment();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frag_container, contributorFragment, ContributorFragment.class.getName());
+        fragmentTransaction.commit();
+        contributorFragment.setArguments(args);
+
+    }
+
+    private void setBundle(View itemView, int position) {
+        args = new Bundle();
+        String[] clickedRepository = {gitHubData.get(position).getOwner().getUserLogin(),
+                gitHubData.get(position).getName()};
+        args.putStringArray(Constants.SELECTED_REPOSITORY, clickedRepository);
     }
 }
