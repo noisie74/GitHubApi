@@ -19,6 +19,8 @@ import com.mikhail.githubapi.model.Contributor;
 import com.mikhail.githubapi.provider.GitHubAPIService;
 import com.mikhail.githubapi.util.Constants;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,6 +33,7 @@ import rx.schedulers.Schedulers;
 
 import static com.mikhail.githubapi.util.AppUtils.isConnected;
 import com.mikhail.githubapi.interfaces.ControlActionBar;
+import com.mikhail.githubapi.util.Filter;
 
 
 /**
@@ -108,7 +111,8 @@ public class ContributorFragment extends Fragment  {
                 List<Contributor> contributors = response.body();
                 Log.d(Constants.CONTR_TAG, "Call success!");
 
-                contributorObjectAdapter = new ContributorObjectAdapter(contributors);
+                Collection<Contributor> frequentContributors = Filter.isFrequentContributor(contributors);
+                contributorObjectAdapter = new ContributorObjectAdapter(new ArrayList(frequentContributors));
                 recyclerView.setAdapter(contributorObjectAdapter);
                 swipeContainer.setRefreshing(false);
                 setPullRefresh();
@@ -144,41 +148,5 @@ public class ContributorFragment extends Fragment  {
 
     }
 
-    private void getContributorsRX() {
-
-
-        GitHubAPIService.GitHubRx gitHub = GitHubAPIService.createRx();
-
-        Observable<Response<Contributor>> observable =
-                gitHub.contributors("vic317yeh",
-                        "One-Click-to-Be-Pro");
-
-        observable.observeOn(AndroidSchedulers.mainThread()).
-                subscribeOn(Schedulers.io()).
-                observeOn(AndroidSchedulers.mainThread()).
-                subscribe(new Subscriber<Response<Contributor>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d(Constants.CONTR_TAG, "Call failed!");
-
-                    }
-
-                    @Override
-                    public void onNext(Response<Contributor> contributors) {
-                        Log.d(Constants.CONTR_TAG, "Call success!");
-
-//                        Collections.addAll();
-
-//                        contributorAdapter = new ContributorAdapter((List<Contributor>) contributors.body());
-//                        recyclerView.setAdapter(contributorAdapter);
-//                        contributorAdapter.notifyDataSetChanged();
-                    }
-                });
-    }
 
 }

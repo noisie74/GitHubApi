@@ -16,7 +16,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class ContributorObjectAdapter extends RecyclerView.Adapter<ContributorObjectAdapter.ViewHolder> {
-//    private List<T> contributorObject; // T - is template to use different objects
     private List<Contributor> contributors;
     private Context context;
 
@@ -55,7 +54,6 @@ public class ContributorObjectAdapter extends RecyclerView.Adapter<ContributorOb
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        T modelObject = this.contributorObject.get(position);
 
         Contributor data = this.contributors.get(position);
 

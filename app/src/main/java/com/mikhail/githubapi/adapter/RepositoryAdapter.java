@@ -84,26 +84,3 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
     }
 
 }
-
-
-//    private void bindData(final RepositoryItem data, MyViewHolder holder) {
-//        holder.parentView.setTag(holder);
-//        holder.name.setText(data.getName());
-//        holder.language.setText(data.getLanguage());
-//        holder.date.setText(MyUtils.formatInputDate(data.getCreatedAt()));
-//        holder.star.setText(String.valueOf(data.getStargazersCount()));
-//
-//        holder.parentView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                goToShowDevInfo(data.getOwner());
-//            }
-//        });
-//
-//    }
-//
-//    private void goToShowDevInfo(Contributor contributor) {
-//        Intent mpdIntent = new Intent(mActivity, ContributorActivity.class)
-//                .putExtra(ContributorActivity.EXTRAS_OWNER, contributor);
-//        mActivity.startActivity(mpdIntent);
-//    }

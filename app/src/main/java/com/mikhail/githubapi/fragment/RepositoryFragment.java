@@ -1,5 +1,6 @@
 package com.mikhail.githubapi.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -127,6 +128,8 @@ public class RepositoryFragment extends Fragment {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    Activity a = getActivity();
+                    if(a == null) return;
                     Intent intent = new Intent(Settings.ACTION_SETTINGS);
                     startActivity(intent);
                 }
@@ -183,7 +186,7 @@ public class RepositoryFragment extends Fragment {
 //                    contributorFragment.setUrl(item.getContributorURL());
 
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.frag_container, contributorFragment);
+                    fragmentTransaction.replace(R.id.frag_container, contributorFragment, ContributorFragment.class.getName());
                     fragmentTransaction.commit();
                     Log.d("RepositoryFragment", "Fragment transition on click!");
                 }

@@ -26,13 +26,14 @@ public class MainActivity extends AppCompatActivity implements ControlActionBar 
         setContentView(R.layout.activity_main);
         fragContainer = (FrameLayout) findViewById(R.id.frag_container);
         contributorFragment = new ContributorFragment();
+        setFragment();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setFragment();
+//        setFragment();
 
         //TODO create method to check which fragment to show
     }
@@ -43,8 +44,9 @@ public class MainActivity extends AppCompatActivity implements ControlActionBar 
         repositoryFragment = new RepositoryFragment();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.replace(R.id.frag_container, repositoryFragment);
+
+        fragmentTransaction.replace(R.id.frag_container, repositoryFragment, RepositoryFragment.class.getName());
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
     }
@@ -60,13 +62,23 @@ public class MainActivity extends AppCompatActivity implements ControlActionBar 
 
         //TODO fix back button to show repository fragment when pressed from contributor fr
 
-
-        if (contributorFragment != null) {
-            setFragment();
-            contributorFragment = null;
-        } if (repositoryFragment == null){
+        FragmentManager m = getSupportFragmentManager();
+        ContributorFragment contributorFragment = (ContributorFragment) m.findFragmentByTag(ContributorFragment.class.getName());
+        if(contributorFragment != null){
+            FragmentTransaction t = m.beginTransaction();
+            t.remove(contributorFragment);
+            t.commit();
             setFragment();
         }
+
+
+//
+//        if (contributorFragment != null) {
+//            setFragment();
+//            contributorFragment = null;
+//        } if (repositoryFragment == null){
+//            setFragment();
+//        }
 //        if (repositoryFragment != null) {
 //            super.onBackPressed();
 //        }
