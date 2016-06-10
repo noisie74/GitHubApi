@@ -15,6 +15,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+/**
+ * Adapter for contributor object
+ */
 public class ContributorAdapter extends RecyclerView.Adapter<ContributorAdapter.ViewHolder> {
     private List<Contributor> contributors;
     private Context context;
@@ -22,9 +25,9 @@ public class ContributorAdapter extends RecyclerView.Adapter<ContributorAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final ImageView contributorImageView;
-        public final TextView contributorNameTextView;
-        public final TextView contributionsTextView;
-        public final TextView contributorURL;
+        public final TextView contributorNameTextView, contributionsTextView,
+                contributorURL;
+
 
         public ViewHolder(View v) {
             super(v);

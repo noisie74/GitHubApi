@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Created by Mikhail on 6/5/16.
+ * Utilities class
  */
 public class AppUtils {
 

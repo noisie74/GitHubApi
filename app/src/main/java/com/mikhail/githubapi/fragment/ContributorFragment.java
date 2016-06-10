@@ -33,7 +33,8 @@ import com.mikhail.githubapi.util.Filter;
 
 
 /**
- * Created by Mikhail on 6/6/16.
+ * fragment with top contributors for selected
+ * repository
  */
 public class ContributorFragment extends Fragment  {
 
@@ -72,17 +73,28 @@ public class ContributorFragment extends Fragment  {
             throw new ClassCastException();
         }
     }
-
+    /**
+     * set actionBar title for selected
+     * repository
+     */
     private void setControlBarTitle(){
         controlActionBar.setActionBarTitle(selectedRepository[1]);
 
     }
 
+    /**
+     * get selected
+     * repository
+     */
     private void getClickedRepository() {
         Bundle clickedRepository = getArguments();
         selectedRepository = clickedRepository.getStringArray(Constants.SELECTED_REPOSITORY);
     }
 
+    /**
+     * initialize recycler view
+     * and give adapter empty arrayList
+     */
     private void initRecyclerView(View v) {
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -97,6 +109,10 @@ public class ContributorFragment extends Fragment  {
 
     }
 
+    /**
+     * api call to get top contributors
+     * for selected repository
+     */
     private void getContributors() {
         GitHubAPIService.GitHub github = GitHubAPIService.create();
 
@@ -124,6 +140,9 @@ public class ContributorFragment extends Fragment  {
         });
     }
 
+    /**
+     * swipe screen to refresh top repositories list
+     */
     private void setPullRefresh() {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

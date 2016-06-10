@@ -1,7 +1,7 @@
 package com.mikhail.githubapi.util;
 
 /**
- * Created by Mikhail on 6/7/16.
+ * app's Constants values
  */
 public class Constants {
 

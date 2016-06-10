@@ -8,15 +8,13 @@ import android.os.Bundle;
 import android.widget.FrameLayout;
 
 import com.mikhail.githubapi.R;
-import com.mikhail.githubapi.fragment.ContributorFragment;
 import com.mikhail.githubapi.fragment.RepositoryFragment;
 import com.mikhail.githubapi.interfaces.ControlActionBar;
+import com.mikhail.githubapi.util.Constants;
 
 
 public class MainActivity extends AppCompatActivity implements ControlActionBar {
 
-    private ContributorFragment contributorFragment;
-    private RepositoryFragment repositoryFragment;
     private FrameLayout fragContainer;
 
 
@@ -24,20 +22,24 @@ public class MainActivity extends AppCompatActivity implements ControlActionBar 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fragContainer = (FrameLayout) findViewById(R.id.frag_container);
-        contributorFragment = new ContributorFragment();
-        repositoryFragment = new RepositoryFragment();
+        setFragContainer();
         setFragment();
+    }
+
+    /**
+     * set Fragment with top repositories
+     */
+    private void setFragment() {
+        RepositoryFragment repositoryFragment = new RepositoryFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frag_container, repositoryFragment, Constants.REPOS_TAG);
+        fragmentTransaction.commit();
 
     }
 
-    private void setFragment() {
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frag_container, repositoryFragment, RepositoryFragment.class.getName());
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+    private void setFragContainer() {
+        fragContainer = (FrameLayout) findViewById(R.id.frag_container);
 
     }
 
@@ -45,16 +47,11 @@ public class MainActivity extends AppCompatActivity implements ControlActionBar 
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
 
-
     }
 
     @Override
     public void onBackPressed() {
-
-        if (contributorFragment != null) {
-            setFragment();
-            contributorFragment = null;
-        }
+        getSupportActionBar().setTitle(getString(R.string.app_title));
         super.onBackPressed();
     }
 }

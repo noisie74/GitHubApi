@@ -19,7 +19,7 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * Created by Mikhail on 6/4/16.
+ * Retrofit for gitHub api calls
  */
 public class GitHubAPIService {
 

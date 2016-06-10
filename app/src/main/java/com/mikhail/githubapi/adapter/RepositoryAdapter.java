@@ -14,7 +14,7 @@ import com.mikhail.githubapi.util.AppUtils;
 import java.util.List;
 
 /**
- * Created by Mikhail on 4/17/16.
+ * Adapter for repository object
  */
 public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.ViewHolder> {
 
@@ -37,7 +37,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView headline, date, star;
+        public final TextView headline, date, star;
 
         public ViewHolder(final View itemView) {
             super(itemView);

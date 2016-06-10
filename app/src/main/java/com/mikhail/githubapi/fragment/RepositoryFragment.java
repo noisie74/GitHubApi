@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,7 +39,7 @@ import rx.schedulers.Schedulers;
 import static com.mikhail.githubapi.util.AppUtils.isConnected;
 
 /**
- * Created by Mikhail on 6/7/16.
+ * fragment with top gitHub repositories
  */
 public class RepositoryFragment extends Fragment {
 
@@ -48,9 +47,9 @@ public class RepositoryFragment extends Fragment {
     private RepositoryAdapter repositoryAdapter;
     private List<Items> gitHubData;
     private SwipeRefreshLayout swipeContainer;
-    public Context context;
     private View v;
     private Bundle args;
+    public Context context;
 
 
     @Nullable
@@ -67,7 +66,10 @@ public class RepositoryFragment extends Fragment {
 
         return v;
     }
-
+    /**
+     * initialize recycler view
+     * and give adapter empty arrayList
+     */
     private void initRecyclerView(View v) {
 
         gitHubData = new ArrayList<>();
@@ -78,7 +80,10 @@ public class RepositoryFragment extends Fragment {
         recyclerView.setAdapter(repositoryAdapter);
     }
 
-    private void reposApiCall() {
+    /**
+     * gitHub api call to get week's top starred repositories
+     */
+    public void reposApiCall() {
         GitHubAPIService.GitHubRx gitHub = GitHubAPIService.createRx();
 
         Observable<Response<Repo>> observable =
@@ -110,6 +115,11 @@ public class RepositoryFragment extends Fragment {
                 });
     }
 
+    /**
+     * successful api call
+     * returns a list of top repositories
+     * @param repositories
+     */
     private void callSuccess(Response<Repo> repositories) {
 
         gitHubData = repositories.body().getItems();
@@ -143,6 +153,9 @@ public class RepositoryFragment extends Fragment {
         }
     }
 
+    /**
+     * swipe screen to refresh top repositories list
+     */
     private void setPullRefresh() {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -162,6 +175,9 @@ public class RepositoryFragment extends Fragment {
 
     }
 
+    /**
+     * set repository click listener
+     */
     private void reposClickListener() {
 
         if (repositoryAdapter != null) {
@@ -170,7 +186,7 @@ public class RepositoryFragment extends Fragment {
                 @Override
                 public void onItemClick(View itemView, int position) {
 
-                    setBundle(itemView, position);
+                    setBundle(position);
                     setContributorFragment(args);
 
                 }
@@ -179,16 +195,27 @@ public class RepositoryFragment extends Fragment {
 
     }
 
+    /**
+     * set fragment with top repository contributors
+     * @param args
+     */
     private void setContributorFragment(Bundle args) {
         ContributorFragment contributorFragment = new ContributorFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frag_container, contributorFragment, ContributorFragment.class.getName());
+        fragmentTransaction.replace(R.id.frag_container, contributorFragment, Constants.CONTR_TAG);
+        fragmentTransaction.addToBackStack(Constants.CONTR_TAG);
         fragmentTransaction.commit();
         contributorFragment.setArguments(args);
 
     }
 
-    private void setBundle(View itemView, int position) {
+    /**
+     * send selected repository to contributor
+     * fragment as a bundle
+     * @param position
+     */
+
+    private void setBundle(int position) {
         args = new Bundle();
         String[] clickedRepository = {gitHubData.get(position).getOwner().getUserLogin(),
                 gitHubData.get(position).getName()};
