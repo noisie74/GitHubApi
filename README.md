@@ -11,8 +11,8 @@ Features:
 <html>
 <body>
 <p>
-<img src="http://imgur.com/fZAQuPN" width = "150" height = "250">
-<img src="http://imgur.com/YMpSnP1" width = "150" height = "250">
+<img src="http://i.imgur.com/fZAQuPN.png" width = "150" height = "250">
+<img src="http://i.imgur.com/YMpSnP1.png" width = "150" height = "250">
 </p>
 </body>
 </html>
