@@ -9,13 +9,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Created by Mikhail on 6/5/16.
+ * Utilities class
  */
 public class AppUtils {
 
         /**
-         * method to check for network availability. returns true for available and
-         * false for unavailable
+         * check for network availability
          */
         public static boolean isConnected(Context context) {
             ConnectivityManager connMgr = (ConnectivityManager)

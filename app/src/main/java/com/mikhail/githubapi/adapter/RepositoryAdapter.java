@@ -9,28 +9,35 @@ import android.widget.TextView;
 
 import com.mikhail.githubapi.R;
 import com.mikhail.githubapi.model.Items;
-import com.mikhail.githubapi.model.Repo;
 import com.mikhail.githubapi.util.AppUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Mikhail on 4/17/16.
+ * Adapter for repository object
  */
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.ViewHolder> {
 
     private List<Items> repositories;
     public Context context;
+    public static OnItemClickListener listener;
 
-    public RecyclerViewAdapter(List<Items> repositories) {
+
+    public RepositoryAdapter(List<Items> repositories) {
         this.repositories = repositories;
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(View itemView, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView headline, date, star;
+        public final TextView headline, date, star;
 
         public ViewHolder(final View itemView) {
             super(itemView);
@@ -39,6 +46,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             date = (TextView) itemView.findViewById(R.id.date);
             star = (TextView) itemView.findViewById(R.id.star);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null)
+                        listener.onItemClick(itemView, getLayoutPosition());
+                }
+            });
         }
 
     }
@@ -48,7 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.recyclerview_layout, parent, false);
+        View view = inflater.inflate(R.layout.fragment_repo_layout, parent, false);
         ViewHolder vh = new ViewHolder(view);
 
         return vh;
@@ -68,5 +82,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return repositories.size();
 
     }
-}
 
+}

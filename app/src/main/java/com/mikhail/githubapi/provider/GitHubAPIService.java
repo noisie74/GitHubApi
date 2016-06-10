@@ -1,6 +1,7 @@
 package com.mikhail.githubapi.provider;
 
 
+import com.mikhail.githubapi.model.Contributor;
 import com.mikhail.githubapi.model.Repo;
 
 import java.util.List;
@@ -18,11 +19,11 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * Created by Mikhail on 6/4/16.
+ * Retrofit for gitHub api calls
  */
 public class GitHubAPIService {
 
-    public static final String API_URL = "https://api.github.com/search/";
+    public static final String API_URL = "https://api.github.com/";
 
 
     public static GitHubRx createRx() {
@@ -35,14 +36,30 @@ public class GitHubAPIService {
     }
 
     public interface GitHubRx {
-        @GET("repositories")
+        @GET("search/repositories")
         Observable<Response<Repo>> repositories(
                 @Query("q") String query,
                 @Query("sort") String rating,
                 @Query("order") String orderBy);
 
+
     }
 
+
+    public interface GitHub {
+        @GET("/repos/{owner}/{repo}/contributors")
+        Call<List<Contributor>> contributors(
+                @Path("owner") String owner,
+                @Path("repo") String repo);
+    }
+
+    public static GitHub create() {
+        return new Retrofit.Builder()
+                .baseUrl(API_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(GitHubAPIService.GitHub.class);
+    }
 
 }
 
