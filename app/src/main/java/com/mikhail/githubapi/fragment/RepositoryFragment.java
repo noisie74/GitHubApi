@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.mikhail.githubapi.R;
@@ -202,6 +204,7 @@ public class RepositoryFragment extends Fragment {
     private void setContributorFragment(Bundle args) {
         ContributorFragment contributorFragment = new ContributorFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
         fragmentTransaction.replace(R.id.frag_container, contributorFragment, Constants.CONTR_TAG);
         fragmentTransaction.addToBackStack(Constants.CONTR_TAG);
         fragmentTransaction.commit();
