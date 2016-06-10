@@ -20,6 +20,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.mikhail.githubapi.R;
+import com.mikhail.githubapi.activity.MainActivity;
 import com.mikhail.githubapi.adapter.RepositoryAdapter;
 import com.mikhail.githubapi.model.Items;
 import com.mikhail.githubapi.model.Repo;
@@ -98,6 +99,10 @@ public class RepositoryFragment extends Fragment {
                 subscribe(new Subscriber<Response<Repo>>() {
                     @Override
                     public void onCompleted() {
+
+                        if(MainActivity.progressBar.isShown()){
+                            MainActivity.progressBar.setVisibility(View.GONE);
+                        }
 
                     }
 

@@ -5,7 +5,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 
 import com.mikhail.githubapi.R;
 import com.mikhail.githubapi.fragment.RepositoryFragment;
@@ -16,6 +18,7 @@ import com.mikhail.githubapi.util.Constants;
 public class MainActivity extends AppCompatActivity implements ControlActionBar {
 
     private FrameLayout fragContainer;
+    public static ProgressBar progressBar;
 
 
     @Override
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements ControlActionBar 
         setContentView(R.layout.activity_main);
         setFragContainer();
         setFragment();
+        showProgress(true);
     }
 
     /**
@@ -52,7 +56,17 @@ public class MainActivity extends AppCompatActivity implements ControlActionBar 
     @Override
     public void onBackPressed() {
         getSupportActionBar().setTitle(getString(R.string.app_title));
+        showProgress(true);
         super.onBackPressed();
+    }
+
+    private void showProgress(boolean isShow) {
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        if (progressBar != null) {
+            progressBar.setVisibility(isShow ? View.VISIBLE : View.GONE);
+
+        }
+
     }
 }
 

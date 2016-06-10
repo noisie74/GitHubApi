@@ -128,6 +128,7 @@ public class ContributorFragment extends Fragment  {
                 recyclerView.setAdapter(contributorAdapter);
                 swipeContainer.setRefreshing(false);
                 setPullRefresh();
+
             }
 
             @Override
