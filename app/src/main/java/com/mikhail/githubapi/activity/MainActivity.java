@@ -10,15 +10,18 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.mikhail.githubapi.R;
+import com.mikhail.githubapi.fragment.ContributorFragment;
 import com.mikhail.githubapi.fragment.RepositoryFragment;
 import com.mikhail.githubapi.interfaces.ControlActionBar;
+import com.mikhail.githubapi.model.Contributor;
 import com.mikhail.githubapi.util.Constants;
 
 
 public class MainActivity extends AppCompatActivity implements ControlActionBar {
 
-    private FrameLayout fragContainer;
+    private FrameLayout fragContainer, fragContainerLarge;
     public static ProgressBar progressBar;
+    ContributorFragment contributorFragment;
 
 
     @Override
@@ -34,16 +37,22 @@ public class MainActivity extends AppCompatActivity implements ControlActionBar 
      * set Fragment with top repositories
      */
     private void setFragment() {
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         RepositoryFragment repositoryFragment = new RepositoryFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frag_container, repositoryFragment, Constants.REPOS_TAG);
+
+        if (fragContainerLarge != null) {
+            contributorFragment = new ContributorFragment();
+            fragmentTransaction.add(R.id.frag_container_large, contributorFragment);
+        }
         fragmentTransaction.commit();
 
     }
 
     private void setFragContainer() {
         fragContainer = (FrameLayout) findViewById(R.id.frag_container);
+        fragContainerLarge = (FrameLayout) findViewById(R.id.frag_container_large);
 
     }
 
@@ -68,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements ControlActionBar 
         }
 
     }
+
 }
 
 
